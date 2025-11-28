@@ -52,25 +52,6 @@ Weather Code: {daily['weathercode'][i]}
 
     return "\n---\n".join(forecasts)
 
-@mcp.tool()
-async def get_current_weather(latitude: float, longitude: float) -> str:
-    """Get current weather for a location.
-
-    Args:
-        latitude: Latitude of the location
-        longitude: Longitude of the location
-    """
-    
-    # https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m&current=temperature_2m,is_day,showers,cloud_cover,wind_speed_10m,wind_direction_10m,pressure_msl,snowfall,precipitation,relative_humidity_2m,apparent_temperature,rain,weather_code,surface_pressure,wind_gusts_10m
-    url = f"{OPENMETEO_API_BASE}/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,is_day,showers,cloud_cover,wind_speed_10m,wind_direction_10m,pressure_msl,snowfall,precipitation,relative_humidity_2m,apparent_temperature,rain,weather_code,surface_pressure,wind_gusts_10m"
-    #url = f"{OPENMETEO_API_BASE}/forecast?latitude={latitude}&longitude={longitude}&current_weather=true&timezone=auto"
-    data = await make_openmeteo_request(url)
-
-    if not data:
-        return "Unable to fetch current weather data for this location."
-
-    return data
-
 if __name__ == "__main__":
     # Initialize and run the server
     mcp.run(transport='stdio')
